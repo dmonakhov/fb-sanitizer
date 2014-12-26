@@ -53,7 +53,7 @@ class UserCfg:
                                 e[name] = self.data[uid][name]
                         stub[uid] = e
                 with open(self.fname, 'w') as f:
-                        json.dump(stub, f, ensure_ascii=False, indent = 4)
+                        json.dump(stub, f, indent = 4)
 
         def add(self, uid, name, description):
                 e = {}
@@ -216,32 +216,22 @@ def main():
         # Load and parse config files
         try:
                 cfgf = open(config_name, 'rw')
-                try:
-                        cfg = json.load(cfgf)
-                except:
-                        if not options.initconfig:
-                                log_err("Empty config use --create_config")
-                                return 1
-                        cfg = {}
+                cfg = json.load(cfgf)
         except:
-                log_err("Can not open config file " + config_name)
-                return 1
-        
-        try:
-                feeds_f = open(cache_name, 'rw')
-                try:
-                        feeds = json.load(feeds_f)
-                except:
-                        log_info("Bad cache file, force cache update")
-                        update_cache = True
-        except:
-                log_err("Can not open cache file " + cache_name)
-                return 1
+                if not options.initconfig:
+                        log_err("Empty config use --create_config")
+                        return 1
+                cfg = {}        
 
         try:
-                print "init"
+                feeds_f = open(cache_name, 'rw')
+                feeds = json.load(feeds_f)
+        except:
+                log_info("Bad cache file, force cache update")
+                update_cache = True
+
+        try:
                 user_cfg = UserCfg(user_cfg_name)
-                print "load"
                 user_cfg.load_cfg()
         except:
                 log_err("Can not open user list file " + user_cfg_name)
@@ -262,7 +252,7 @@ def main():
                 try:
                         print cfg
                         with open(config_name, 'w') as f:
-                                json.dump(cfg, f, ensure_ascii=False, indent = 4)
+                                json.dump(cfg, f, indent = 4)
                 except:
                         log_err("Can not initialize config file")
                         return 1
@@ -273,7 +263,7 @@ def main():
         if (update_cache):
                 feeds = fetch_feed(graph, cfg['event_id'])
                 with open(cache_name, 'w') as f:
-                        json.dump(feeds, f, ensure_ascii=False, indent = 4)
+                        json.dump(feeds, f, indent = 4)
                         f.close()
                 
         if options.adduser_by_object:

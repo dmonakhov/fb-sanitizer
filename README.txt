@@ -31,7 +31,7 @@ Stage (1) Initialization:
       And your event id is 417200101767938 (Id of 15.1.15)
 
       # Copy paster this to your console (DO NOT FORGET TO INSERT YOUR ACTUAL ACCESSTOKEN )
-      python ./fb-sanitizer.py -v -C -i 417200101767938 -k CAACEdEose0cBAAqa2HcFyW73n8cBItvyF9qPT
+      python ./fb-sanitizer.py -v -I -i 417200101767938 -k CAACEdEose0cBAAqa2HcFyW73n8cBItvyF9qPT
 
 Stage (2) fetch feed cache from facebook
       # run following commend
